@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angélica Oliva - Catálogo & Servicios</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#faf7f2',
+                            100: '#f3ece0',
+                            200: '#e5d6be',
+                            300: '#d5bd99',
+                            400: '#c5a374',
+                            500: '#b38f2a',
+                            600: '#8c6d1f',
+                            gold: '#d4af37',
+                            golddark: '#b38f2a',
+                            cream: '#faf8f5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-cream min-h-screen font-sans text-gray-800 antialiased pb-12">
+
+    <!-- Header / Navbar Navigation -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-40 border-b border-brand-200 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-white border border-brand-200 overflow-hidden shadow-sm flex items-center justify-center shrink-0">
+                    <img src="logo.jpg" alt="Logo Angélica Oliva" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h1 class="font-serif font-bold text-base text-gray-900 leading-tight">Angélica Oliva</h1>
+                    <span class="text-[11px] text-brand-600 font-semibold tracking-wider">NAILS STUDIO ✨</span>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div class="flex bg-brand-100/50 p-1 rounded-full border border-brand-200 shadow-inner">
+                <button id="tab-catalog" onclick="switchTab('catalog')" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-brand-600 shadow-sm transition-all">
+                    <i class="fa-solid fa-images mr-1"></i>Catálogo
+                </button>
+                <button id="tab-services" onclick="switchTab('services')" class="px-4 py-1.5 rounded-full text-xs font-semibold text-gray-500 hover:text-brand-600 transition-all">
+                    <i class="fa-solid fa-list-check mr-1"></i>Servicios
+                </button>
+                <button id="tab-admin" onclick="switchTab('admin')" class="px-4 py-1.5 rounded-full text-xs font-semibold text-gray-500 hover:text-brand-600 transition-all">
+                    <i class="fa-solid fa-user-gear mr-1"></i>Admin
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 mt-6">
+
+        <!-- ==================== VISTA 1: CATÁLOGOS Y GALERÍA ==================== -->
+        <div id="view-catalog" class="space-y-6">
+            <!-- Banner Presentación -->
+            <div class="bg-gradient-to-r from-brand-500 via-brand-400 to-brand-300 rounded-3xl p-6 text-white shadow-lg text-center relative overflow-hidden">
+                <span class="bg-white/20 text-xs px-3 py-1 rounded-full uppercase tracking-wider font-semibold backdrop-blur-sm">Portafolio Oficial ✨</span>
+                <h2 class="font-serif text-2xl md:text-3xl font-bold mt-2">Galería de Trabajos</h2>
+                <p class="text-brand-50 text-sm mt-1 max-w-md mx-auto">Explora nuestros diseños exclusivos y encuentra la inspiración para tus próximas uñas.</p>
+            </div>
+
+            <!-- Filtros por Categoría -->
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="filterGallery('all')" class="filter-btn active-filter px-4 py-1.5 rounded-full text-xs font-semibold bg-brand-500 text-white shadow transition-all">Todos</button>
+                <button onclick="filterGallery('Semi-Permanente')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-gray-600 border border-brand-200 hover:bg-brand-50 transition-all">Semi-Permanente</button>
+                <button onclick="filterGallery('Nivelación')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-gray-600 border border-brand-200 hover:bg-brand-50 transition-all">Nivelación</button>
+                <button onclick="filterGallery('Jelly Tips')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-gray-600 border border-brand-200 hover:bg-brand-50 transition-all">Jelly Tips</button>
+                <button onclick="filterGallery('Pedicura')" class="filter-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-gray-600 border border-brand-200 hover:bg-brand-50 transition-all">Pedicura</button>
+            </div>
+
+            <!-- Grid de Fotos del Catálogo -->
+            <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Se inyecta dinámicamente -->
+            </div>
+        </div>
+
+        <!-- ==================== VISTA 2: LISTA DE SERVICIOS Y PRECIOS ==================== -->
+        <div id="view-services" class="space-y-6 hidden">
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-brand-200 space-y-4">
+                <div class="text-center max-w-md mx-auto">
+                    <h2 class="font-serif font-bold text-2xl text-gray-800">Menú de Servicios</h2>
+                    <p class="text-xs text-gray-500 mt-1">Conoce nuestros servicios, precios y tiempo estimado de trabajo.</p>
+                </div>
+
+                <div id="services-menu-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                    <!-- Lista de servicios inyectada por JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== VISTA 3: PANEL DE ADMINISTRACIÓN ==================== -->
+        <div id="view-admin" class="space-y-6 hidden">
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-brand-200 space-y-6">
+                <h2 class="font-serif font-bold text-xl text-gray-800 flex items-center">
+                    <i class="fa-solid fa-cloud-arrow-up text-brand-500 mr-2"></i> Subir Nueva Foto al Catálogo
+                </h2>
+
+                <!-- Formulario Agregar Trabajo -->
+                <form onsubmit="handleAddWork(event)" class="space-y-4 max-w-lg">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Nombre o Título del Trabajo</label>
+                        <input type="text" id="work-title" required placeholder="Ej: Efecto Glazed Donut" class="w-full px-4 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-brand-300 outline-none">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Categoría</label>
+                        <select id="work-category" class="w-full px-4 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-brand-300 outline-none">
+                            <option value="Semi-Permanente">Semi-Permanente</option>
+                            <option value="Nivelación">Nivelación</option>
+                            <option value="Jelly Tips">Jelly Tips</option>
+                            <option value="Pedicura">Pedicura</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">URL de la Imagen o Nombre del Archivo</label>
+                        <input type="text" id="work-image" required placeholder="Ej: fotos/uñas1.jpg o link directo" class="w-full px-4 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-brand-300 outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Descripción Breve</label>
+                        <input type="text" id="work-desc" placeholder="Ej: Tono nude con destellos dorados" class="w-full px-4 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-brand-300 outline-none">
+                    </div>
+
+                    <button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md text-xs transition-all">
+                        <i class="fa-solid fa-plus mr-1"></i> Agregar al Catálogo
+                    </button>
+                </form>
+
+                <!-- Gestión de Fotos Existentes -->
+                <div class="pt-6 border-t border-gray-100">
+                    <h3 class="font-bold text-sm text-gray-700 mb-3">Fotos Actualmente en el Catálogo:</h3>
+                    <div id="admin-gallery-list" class="space-y-2 max-w-lg">
+                        <!-- Lista con botón eliminar por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS LÓGICA -->
+    <script>
+        // DATOS INICIALES DE EJEMPLO
+        let catalogData = JSON.parse(localStorage.getItem('ao_catalog')) || [
+            { id: 1, title: 'Efecto Encaje Nude', category: 'Semi-Permanente', image: 'logo.jpg', desc: 'Acabado delicado y elegante' },
+            { id: 2, title: 'Francesa con Nivelación', category: 'Nivelación', image: 'logo.jpg', desc: 'Refuerzo de uña natural' },
+            { id: 3, title: 'Jelly Tips Cristales', category: 'Jelly Tips', image: 'logo.jpg', desc: 'Extensión y piedras incrustadas' },
+            { id: 4, title: 'Pedicura Spa Gold', category: 'Pedicura', image: 'logo.jpg', desc: 'Limpieza profunda y esmaltado' }
+        ];
+
+        const servicesData = [
+            { name: 'Esmaltado Semi-Permanente', price: 8, duration: '1.5 Horas', desc: 'Incluye limpieza de cutícula y esmaltado de alta duración.' },
+            { name: 'Nivelación de Uña Natural', price: 15, duration: '2 Horas', desc: 'Refuerzo con gel para uñas frágiles o quebradizas.' },
+            { name: 'Sistemas Jelly Tips', price: 15, duration: '1.5 Horas', desc: 'Extensiones completas rápidas con acabado súper natural.' },
+            { name: 'Pedicura Estética', price: 9, duration: '1 Hora', desc: 'Exfoliación, limpieza profunda y embellecimiento de pies.' },
+            { name: 'Retiro de Sistema / Gel', price: 3.5, duration: '40 Minutos', desc: 'Retiro cuidadoso sin dañar la lámina de la uña.' }
+        ];
+
+        let currentFilter = 'all';
+
+        window.onload = function() {
+            renderGallery();
+            renderServicesMenu();
+            renderAdminGalleryList();
+        };
+
+        // CAMBIO DE PESTAÑAS (NAVEGACIÓN)
+        function switchTab(tab) {
+            const vCatalog = document.getElementById('view-catalog');
+            const vServices = document.getElementById('view-services');
+            const vAdmin = document.getElementById('view-admin');
+
+            const tCatalog = document.getElementById('tab-catalog');
+            const tServices = document.getElementById('tab-services');
+            const tAdmin = document.getElementById('tab-admin');
+
+            if (tab === 'admin') {
+                let pass = prompt("Ingresa la clave de administración:");
+                if (pass !== "angelica2026") {
+                    if (pass !== null) alert("Clave incorrecta.");
+                    return;
+                }
+            }
+
+            vCatalog.classList.toggle('hidden', tab !== 'catalog');
+            vServices.classList.toggle('hidden', tab !== 'services');
+            vAdmin.classList.toggle('hidden', tab !== 'admin');
+
+            tCatalog.className = tab === 'catalog' ? "px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-brand-600 shadow-sm transition-all" : "px-4 py-1.5 rounded-full text-xs font-semibold text-gray-500 hover:text-brand-600 transition-all";
+            tServices.className = tab === 'services' ? "px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-brand-600 shadow-sm transition-all" : "px-4 py-1.5 rounded-full text-xs font-semibold text-gray-500 hover:text-brand-600 transition-all";
+            tAdmin.className = tab === 'admin' ? "px-4 py-1.5 rounded-full text-xs font-semibold bg-white text-brand-600 shadow-sm transition-all" : "px-4 py-1.5 rounded-full text-xs font-semibold text-gray-500 hover:text-brand-600 transition-all";
+        }
+
+        // RENDER DE GALERÍA DE TRABAJOS
+        function renderGallery() {
+            const grid = document.getElementById('gallery-grid');
+            const filtered = currentFilter === 'all' ? catalogData : catalogData.filter(item => item.category === currentFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-400 text-xs">No hay trabajos publicados en esta categoría todavía.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-200 group hover:shadow-md transition-all">
+                    <div class="h-48 overflow-hidden bg-brand-50 relative">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-0.5 rounded-full font-semibold">
+                            ${item.category}
+                        </span>
+                    </div>
+                    <div class="p-3">
+                        <h4 class="font-bold text-xs text-gray-800">${item.title}</h4>
+                        <p class="text-[11px] text-gray-500 mt-0.5">${item.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // FILTRADO DE BOTONES
+        function filterGallery(category) {
+            currentFilter = category;
+            renderGallery();
+        }
+
+        // RENDER DE MENÚ DE SERVICIOS
+        function renderServicesMenu() {
+            const list = document.getElementById('services-menu-list');
+            list.innerHTML = servicesData.map(s => `
+                <div class="border border-brand-200 p-4 rounded-2xl bg-brand-50/30 flex justify-between items-start">
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-sm text-gray-800">${s.name}</h4>
+                        <p class="text-xs text-gray-500 max-w-xs">${s.desc}</p>
+                        <span class="inline-block text-[11px] text-brand-600 font-medium"><i class="fa-regular fa-clock mr-1"></i>Duración aprox: ${s.duration}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-serif font-bold text-lg text-brand-600">$${s.price.toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // LÓGICA DE AGREGAR Y ELIMINAR TRABAJOS (ADMIN)
+        function handleAddWork(e) {
+            e.preventDefault();
+            const title = document.getElementById('work-title').value.trim();
+            const category = document.getElementById('work-category').value;
+            const image = document.getElementById('work-image').value.trim();
+            const desc = document.getElementById('work-desc').value.trim();
+
+            const newItem = { id: Date.now(), title, category, image, desc };
+            catalogData.unshift(newItem);
+            saveCatalog();
+            
+            e.target.reset();
+            alert('¡Trabajo agregado al catálogo con éxito!');
+            renderGallery();
+            renderAdminGalleryList();
+        }
+
+        function deleteWork(id) {
+            if (confirm('¿Estás seguro de eliminar esta foto del catálogo?')) {
+                catalogData = catalogData.filter(item => item.id !== id);
+                saveCatalog();
+                renderGallery();
+                renderAdminGalleryList();
+            }
+        }
+
+        function renderAdminGalleryList() {
+            const list = document.getElementById('admin-gallery-list');
+            list.innerHTML = catalogData.map(item => `
+                <div class="flex items-center justify-between p-2 border border-gray-200 rounded-xl bg-gray-50 text-xs">
+                    <div class="flex items-center space-x-2 truncate">
+                        <img src="${item.image}" class="w-8 h-8 rounded-lg object-cover">
+                        <span class="font-semibold truncate">${item.title} (${item.category})</span>
+                    </div>
+                    <button onclick="deleteWork(${item.id})" class="text-red-500 hover:text-red-700 px-2 py-1">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function saveCatalog() {
+            localStorage.setItem('ao_catalog', JSON.stringify(catalogData));
+        }
+    </script>
+</body>
+</html>
